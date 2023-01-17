@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "geodetic_technical_documentation.apps.GeodeticTechnicalDocumentationConfig",
     "users.apps.UsersConfig",
     "geodetic_tools.apps.GeodeticToolsConfig",
+    "phonenumber_field",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -132,3 +133,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.GeoUser"
+
+LOGIN_REDIRECT_URL = "geodetic-work-home"
+
+LOGIN_URL = "login"
