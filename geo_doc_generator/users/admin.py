@@ -1,4 +1,4 @@
 from django.contrib import admin
-from models import GeoUser
+from .models.geouser import GeoUser
 
 admin.site.register(GeoUser)

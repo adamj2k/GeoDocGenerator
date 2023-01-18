@@ -4,5 +4,7 @@ services:
     build:
       context: ..
       dockerfile: ./.docker/dockerfile
+    volumes:
+      - C:/Devs/GeoDocGenerator/geo_doc_generator:/app/geo_doc_generator/
     ports:
       - "8000:8000"
