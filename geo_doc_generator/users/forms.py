@@ -16,12 +16,33 @@ class UserRegisterForm(UserCreationForm):
             "phone_number",
             "first_name",
             "last_name",
+            "company_name",
+            "adress1",
+            "adress2",
+            "company_phone",
+            "nip_number",
+            "regon_number",
+            "licenced_surveyors",
+            "regural_surveyors",
         ]
 
 
-class UserUpdateForm(forms.ModelForm):
+class UserUpdateForm(UserChangeForm):
     email = forms.EmailField()
 
     class Meta:
         model = GeoUser
-        fields = ["username", "email", "phone_number", "first_name", "last_name"]
+        fields = [
+            "email",
+            "phone_number",
+            "first_name",
+            "last_name",
+            "company_name",
+            "adress1",
+            "adress2",
+            "company_phone",
+            "nip_number",
+            "regon_number",
+            "licenced_surveyors",
+            "regural_surveyors",
+        ]

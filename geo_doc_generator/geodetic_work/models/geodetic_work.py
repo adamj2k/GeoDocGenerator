@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 
 class GeodeticWork(models.Model):
@@ -13,12 +14,15 @@ class GeodeticWork(models.Model):
     precinct = models.CharField(max_length=50, null=True)
     work_object = models.CharField(max_length=100, null=True)
     plots = models.CharField(max_length=50, null=True)
-    survey_date = models.DateField(auto_now=True)
-    begin_date = models.DateField(auto_now=True)
+    survey_date = models.DateField(auto_now_add=True)
+    begin_date = models.DateField(auto_now_add=True)
     change_bdot_database = models.BooleanField(default=False, null=True)
     change_gesut_database = models.BooleanField(default=False, null=True)
     change_egib_database = models.BooleanField(default=False, null=True)
-    documentation_date = models.DateField(auto_now=True)
+    documentation_date = models.DateField(auto_now_add=True)
+    contractor = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1
+    )
 
     class Status(models.TextChoices):
         INPROGRESS = "INP", _("W trakcie")
