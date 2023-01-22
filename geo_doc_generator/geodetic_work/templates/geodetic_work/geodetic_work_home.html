@@ -1,0 +1,70 @@
+{% extends 'geodetic_work/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">Witaj {{ user.first_name }} {{ user.last_name }}!</a>
+            <small class="article-content">Prace zgłoszone dla wykonawcy: {{ user.company_name }}</small>
+        </div>
+    </div>
+</article>
+
+    <table>
+        <tr><th>ID pracy</th><th>status</th><th>Woj.</th><th>powiat</th>
+        <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th>
+        <th>Data aktual.</th><th>Data operatu</th><th>Data mat.</th><th>Obszar[ha]</th>
+        <th>zmiany BDOT500</th><th>zmiany GESUT</th><th>zmiany EGiB</th>
+        </tr>
+        {% for work in works %}
+
+            <tr>
+                <td><a href="{# url 'geodetic-work-details' %}">{{ work.id_work }}</a></td>
+                <td>{{work.status}}</td>
+                <td>{{work.voivodeship}}</td>
+                <td>{{work.county}}</td>
+                <td>{{work.commune}}</td>
+                <td>{{work.precint}}</td>
+                <td>{{work.work_object}}</td>
+                <td>{{work.plots}}</td>
+                <td>{{work.survey_date}}</td>
+                <td>{{work.documentation_date}}</td>
+                <td>{{work.begin_dte}}</td>
+                <td>{{work.change_bdot_database}}</td>
+                <td>{{work.change_gesut_database}}</td>
+                <td>{{work.change_egib_database}}</td>
+                <td><a href="{# url 'geodetic-work-edit' %}">Edytuj robotę</a></td>
+                <td><a href="{# url 'geodetic-work-delete' %}">Usuń robotę</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obje.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a class="btn btn-info mb-4" href="?page{{ num }}"> {{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3'  %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ num }}"> {{ num}}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+{% else %}
+<div class="content-section">
+    <h2>Nie jesteś zalogowany</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a  href="{% url 'login' %}">Zaloguj się</a>
+        </small>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

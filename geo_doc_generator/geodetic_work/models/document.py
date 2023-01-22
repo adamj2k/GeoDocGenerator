@@ -6,7 +6,9 @@ from .geodetic_work import GeodeticWork
 
 class Document(models.Model):
     id_work = models.OneToOneField(GeodeticWork, on_delete=CASCADE)
-    pdf_file = models.FileField(upload_to="static/geodetic_work/", null=True)
+    pdf_file = models.FileField(
+        upload_to="static/geodetic_work/", null=True, blank=True
+    )
 
     class Meta:
         abstract = True
