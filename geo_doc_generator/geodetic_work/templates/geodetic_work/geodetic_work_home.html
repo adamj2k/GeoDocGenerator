@@ -1,4 +1,9 @@
+
 {% extends 'geodetic_work/base.html' %}
+{% load static %}
+{% block js %}
+    <script src="{% static 'geodetic_work/js/geodetic_work_home.js' %}"></script>
+{% endblock %}
 {% block content %}
 {% if user.is_authenticated %}
 
@@ -34,8 +39,8 @@
                 <td>{{work.change_bdot_database}}</td>
                 <td>{{work.change_gesut_database}}</td>
                 <td>{{work.change_egib_database}}</td>
-                <td><a href="{# url 'geodetic-work-edit' %}">Edytuj robotę</a></td>
-                <td><a href="{# url 'geodetic-work-delete' %}">Usuń robotę</a></td>
+                <td><button id="edit-work-{{ work.id }}" onClick="editWork(this.id)">Edytuj</button></td>
+                <td><button id="delete-work-{{ work.id }}" onClick="deleteWork(this.id)">Usuń</button></td>
             </tr>
             {% endfor %}
         </table>
