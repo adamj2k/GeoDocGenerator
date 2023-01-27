@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "geodetic_technical_documentation.apps.GeodeticTechnicalDocumentationConfig",
     "users.apps.UsersConfig",
     "geodetic_tools.apps.GeodeticToolsConfig",
+    "rest_framework",
     "phonenumber_field",
     "crispy_forms",
     "django.contrib.admin",

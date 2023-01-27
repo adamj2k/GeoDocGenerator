@@ -1,0 +1,184 @@
+{% extends 'geodetic_work/base.html' %}
+{% load static %}
+{% block js %}
+    <script src="{% static 'geodetic_work/js/geodetic_work_home.js' %}"></script>
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    <h3>Praca o identyfikatorze: {{work.id_work}}</h3>
+    <h4>Obiekt: {{work.work_object}}</h4>
+    <table>
+        <tr><th>ID pracy</th><th>status</th><th>woj.</th><th>powiat</th>
+        <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th>
+        <th>data aktual.</th><th>data operatu</th><th>data mat.</th><th>obszar[ha]</th>
+        <th>zmiany BDOT500</th><th>zmiany GESUT</th><th>zmiany EGiB</th>
+        </tr>
+            <tr>
+                <td>{{ work.id_work }}</td>
+                <td>{{work.status}}</td>
+                <td>{{work.voivodeship}}</td>
+                <td>{{work.county}}</td>
+                <td>{{work.commune}}</td>
+                <td>{{work.precint}}</td>
+                <td>{{work.work_object}}</td>
+                <td>{{work.plots}}</td>
+                <td>{{work.survey_date}}</td>
+                <td>{{work.documentation_date}}</td>
+                <td>{{work.begin_dte}}</td>
+                <td>{{work.change_bdot_database}}</td>
+                <td>{{work.change_gesut_database}}</td>
+                <td>{{work.change_egib_database}}</td>
+                <td>
+                    <form>
+                        <button type="submit" formaction="{% url 'geodetic-work-edit' work.id %}">Edytuj</button>
+                    </form>
+                </td>
+                <td><button id="delete-work-{{ work.id }}" onClick="deleteWork(this.id)">Usuń</button></td>
+            </tr>
+        </table>
+        <BR>
+        <h4>Dokumenty do operatu:</h4>
+        <table>
+                <tr><th>l. p.</th><th>zawartość</th><th>status</th><th></th><th></th>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                    <td>Spis Treści</td>
+                    <td></td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Generuj</a></td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>Sprawozdanie techniczne</td>
+                    <td>{% if work.technicaldescription.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>Mapa porównania z terenem</td>
+                    <td>{% if work.comparisionmap.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td>Dane obserwacyjne osnowy pomiarowej</td>
+                    <td>{% if work.geodeticnetworksurveydata.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>Szkic osnowy pomiarowej</td>
+                    <td>{% if work.geodeticnetworkdraft.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>6.</td>
+                    <td>Wykaz współrzędnych osnowy pomiarowej</td>
+                    <td>{% if work.geodeticnetworkcoordinates.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>Szkice polowe</td>
+                    <td>{% if work.fielddraft.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>8.</td>
+                    <td>Wykaz współrzędnych punktów pomierzonych</td>
+                    <td>{% if work.listofcoordinates.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>Wykaz zmian danych ewidenycyjnych dot. budynków</td>
+                    <td>{% if work.listofcoordinates.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>10.</td>
+                    <td>Wykaz zmian danych ewidenycyjnych dot. działek</td>
+                    <td>{% if work.listofcoordinates.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+                <tr>
+                    <td>11.</td>
+                    <td>Inne</td>
+                    <td>{% if work.listofcoordinates.id %}
+                        Utworzono
+                        {% else %}
+                        Nie utworzono
+                        {% endif %}
+                    </td>
+                    <td><a href="#">Podgląd</a></td>
+                    <td><a href="#">Dodaj</a></td>
+                </tr>
+        </table>
+
+
+{% else %}
+<div class="content-section">
+    <h2>Nie jesteś zalogowany</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a  href="{% url 'login' %}">Zaloguj się</a>
+        </small>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

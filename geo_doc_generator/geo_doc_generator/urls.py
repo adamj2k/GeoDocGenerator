@@ -42,4 +42,5 @@ urlpatterns = [
     ),
     path("geodetictools/", include("geodetic_tools.urls")),
     path("geodetictechnicaldoc/", include("geodetic_technical_documentation.urls")),
+    path("georestapi/", include("geo_rest_api.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
