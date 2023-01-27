@@ -3,3 +3,5 @@ python-dotenv == 0.21.0
 django-phonenumber-field==7.0.2
 phonenumbers == 8.13.4
 django-crispy-forms == 1.14.0
+pandas==1.5.3
+djangorestframework==3.14.0

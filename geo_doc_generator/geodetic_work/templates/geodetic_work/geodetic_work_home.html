@@ -18,30 +18,31 @@
 
     <table>
         <tr><th>ID pracy</th><th>status</th><th>Woj.</th><th>powiat</th>
-        <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th>
-        <th>Data aktual.</th><th>Data operatu</th><th>Data mat.</th><th>Obszar[ha]</th>
-        <th>zmiany BDOT500</th><th>zmiany GESUT</th><th>zmiany EGiB</th>
+            <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th>
+            <th>Data aktual.</th><th>Data operatu</th><th>Data mat.</th><th>Obszar[ha]</th>
+            <th>zmiany BDOT500</th><th>zmiany GESUT</th><th>zmiany EGiB</th><th></th><th></th>
         </tr>
         {% for work in works %}
 
-            <tr>
-                <td><a href="{# url 'geodetic-work-details' %}">{{ work.id_work }}</a></td>
-                <td>{{work.status}}</td>
-                <td>{{work.voivodeship}}</td>
-                <td>{{work.county}}</td>
-                <td>{{work.commune}}</td>
-                <td>{{work.precint}}</td>
-                <td>{{work.work_object}}</td>
-                <td>{{work.plots}}</td>
-                <td>{{work.survey_date}}</td>
-                <td>{{work.documentation_date}}</td>
-                <td>{{work.begin_dte}}</td>
-                <td>{{work.change_bdot_database}}</td>
-                <td>{{work.change_gesut_database}}</td>
-                <td>{{work.change_egib_database}}</td>
-                <td><button id="edit-work-{{ work.id }}" onClick="editWork(this.id)">Edytuj</button></td>
-                <td><button id="delete-work-{{ work.id }}" onClick="deleteWork(this.id)">Usuń</button></td>
-            </tr>
+        <tr>
+            <td><a href="{% url 'geodetic-work-details' work.id %}">{{ work.id_work }}</a></td>
+            <td>{{work.status}}</td>
+            <td>{{work.voivodeship}}</td>
+            <td>{{work.county}}</td>
+            <td>{{work.commune}}</td>
+            <td>{{work.precinct}}</td>
+            <td>{{work.work_object}}</td>
+            <td>{{work.plots}}</td>
+            <td>{{work.survey_date}}</td>
+            <td>{{work.documentation_date}}</td>
+            <td>{{work.begin_date}}</td>
+            <td>{{work.area}}</td>
+            <td>{{work.change_bdot_database}}</td>
+            <td>{{work.change_gesut_database}}</td>
+            <td>{{work.change_egib_database}}</td>
+            <td><button id="edit-work-{{ work.id }}" onClick="editWork(this.id)">Edytuj</button></td>
+            <td><button id="delete-work-{{ work.id }}" onClick="deleteWork(this.id)">Usuń</button></td>
+        </tr>
             {% endfor %}
         </table>
 

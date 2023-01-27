@@ -30,6 +30,7 @@
                     <div class="navbar-nav mr-auto">
                         {% if user.is_authenticated %}
                         <a class="nav-item nav-link" href="{% url 'geodetic-work-list' %}">Zestawienie robót </a>
+                        <a class="nav-item nav-link" href="{% url 'geodetic-work-create' %}">Dodaj robotę </a>
                         {% else %}
                         {% endif %}
                     </div>
