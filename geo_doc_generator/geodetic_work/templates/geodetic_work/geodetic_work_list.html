@@ -13,7 +13,7 @@
     </form>
     <table>
         <tr><th>ID pracy</th><th>status</th><th>Woj.</th><th>powiat</th>
-        <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th>
+        <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th><th>cel</th>
         <th>Data aktual.</th><th>Data operatu</th><th>Data mat.</th><th>Obszar[ha]</th>
         <th>zmiany BDOT500</th><th>zmiany GESUT</th><th>zmiany EGiB</th><th></th><th></th>
         </tr>
@@ -28,6 +28,7 @@
                 <td>{{work.precinct}}</td>
                 <td>{{work.work_object}}</td>
                 <td>{{work.plots}}</td>
+                <td>{{ work.work_scope }}</td>
                 <td>{{work.survey_date}}</td>
                 <td>{{work.documentation_date}}</td>
                 <td>{{work.begin_date}}</td>
@@ -35,7 +36,7 @@
                 <td>{{work.change_bdot_database}}</td>
                 <td>{{work.change_gesut_database}}</td>
                 <td>{{work.change_egib_database}}</td>
-                <td><button id="edit-work-{{ work.id }}" onClick="editWork(this.id)">Edytuj</button></td>
+                <td><form><button type="submit" formaction="{% url 'geodetic-work-edit' work.id %}">Edytuj</button></form></td>
                 <td><button id="delete-work-{{ work.id }}" onClick="deleteWork(this.id)">Usuń</button></td>
             </tr>
             {% endfor %}

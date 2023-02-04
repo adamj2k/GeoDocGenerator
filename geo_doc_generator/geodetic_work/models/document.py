@@ -16,25 +16,37 @@ class Document(models.Model):
 
 class TechnicalDescription(Document):
     source_data = models.TextField(
-        default="Po analizie materiałów pozyskanych z PZGiK do..."
+        "dane źródłowe", default="Po analizie materiałów pozyskanych z PZGiK do..."
     )
-    comparision_description = models.TextField(default="Wykonano porównanie mapy...")
+    comparision_description = models.TextField(
+        "wywiad terenowy:", default="Wykonano porównanie mapy..."
+    )
     geodetic_network_description = models.TextField(
-        default="Założono osnowę pomiarową ..."
+        "opis osnowy geodezyjnej", default="Założono osnowę pomiarową ..."
     )
     control_survey_description = models.TextField(
-        default="Wykonano pomiar kontrolny ..."
+        "opis pomiaru kontrolnego", default="Wykonano pomiar kontrolny ..."
     )
     land_survey_descrption = models.TextField(
-        default="Wykonano pomiar systuacyjny metodą ..."
+        "opis pomiaru", default="Wykonano pomiar systuacyjny metodą ..."
     )
-    results_descrption = models.TextField(default="Wyniki uzyskano w układzie ...")
-    zudp_building_permit = models.TextField(default="ZUD i pozwolenie na budowe ..")
-    boundary_plots = models.TextField(default="Granice spełniają/nie spełniają ...")
-    output_documents = models.TextField(default="Dla zamawiającego przygotowano...")
-    update_county_database = models.TextField(default="Przekazno pliki w formacie ...")
+    results_descrption = models.TextField(
+        "wyniki pomiaru", default="Wyniki uzyskano w układzie ..."
+    )
+    zudp_building_permit = models.TextField(
+        "ZUD, pozwolenia", default="ZUD i pozwolenie na budowe .."
+    )
+    boundary_plots = models.TextField(
+        "informacja o granicach", default="Granice spełniają/nie spełniają ..."
+    )
+    output_documents = models.TextField(
+        "dokumentacja dla klienta", default="Dla zamawiającego przygotowano..."
+    )
+    update_county_database = models.TextField(
+        "dane przekazywane do PZGiK", default="Przekazno pliki w formacie ..."
+    )
     update_egib_database = models.TextField(
-        default="Kierownik prac stwierdził/nie stwierdził ..."
+        "zmiany egib", default="Kierownik prac stwierdził/nie stwierdził ..."
     )
 
     def __str__(self) -> str:
@@ -47,7 +59,7 @@ class ComaparisionMap(Document):
 
 
 class GeodeticNetworkSurveyData(Document):
-    raport = models.TextField()
+    raport = models.TextField("Raport")
 
     def __str__(self) -> str:
         return f"Dane obserwacyjne osnowy pomiarowej - {self.id_work}"
@@ -59,7 +71,7 @@ class GeodeticNetworkDraft(Document):
 
 
 class GeodeticNetworkCoordinates(Document):
-    list_of_coordinates = models.TextField()
+    list_of_coordinates = models.TextField("Wykaz współrzędnych")
 
     def __str__(self) -> str:
         return f"Wykaz współrzędnych punktów osnowy pomiarowej - {self.id_work}"
@@ -71,7 +83,17 @@ class FieldDraft(Document):
 
 
 class ListOfCoordinates(Document):
-    list_of_coordinates = models.TextField()
+    list_of_coordinates = models.TextField("Wykaz współrzędnych")
 
     def __str__(self) -> str:
         return f"Wykaz współrzednych - {self.id_work}"
+
+
+class ChangeListBuilding(Document):
+    def __str__(self) -> str:
+        return f"Wykaz zmian danych ewidencyjnych dot. budynku - {self.id_work}"
+
+
+class ChangeListPlot(Document):
+    def __str__(self) -> str:
+        return f"Wykaz zmian danych ewidencyjnych dot. działki - {self.id_work}"

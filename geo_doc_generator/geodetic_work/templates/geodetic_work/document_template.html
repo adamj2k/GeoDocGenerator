@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <link rel="stylesheet" type="text/css" href="page.css" >
+
+    <title>Geodetic Documentation Generator</title>
+
+</head>
+
+<body>
+<page size="A4">
+<table style="width:19cm;" border="1" align="center">
+    <tr >
+    <td style="width:9.5cm">
+        <p>{{ id_work }}</p>
+        <p>{{ voivodeship}}</p>
+        <p>{{ county}}</p>
+        <p>{{ commune}}</p>
+        <p>{{ precincts}}</p>
+        <p>{{ work_object}}<p>
+        <p>{{ work_scope }}</p>
+    </td  >
+    <td style="width:9.5cm">nagłówek2 - dane firmy geodezyjnej</td>
+    </tr>
+    <tr>
+       <td colspan="2" style="height:20cm; vertical-align:top">
+        <h2 style="text-align: center;">Sprawozdanie techniczne</h2>
+        <ol type="1">
+           <li>dane sprawozdania</li>
+           <li>Rozpoczęcie prac: {{ begin_date }}</li>
+           <li>Zakończenie prac: {{ documentation_date }}</li>
+           <li>Data pomiaru: {{ survey_date }}</li>
+        </ol>
+            {{technical_description}}
+            {{geodetic_network}}
+            {{geodetic_coordinates}}
+            {{list_coordinates}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+
+        </td>
+        <td>
+            stopka podpis
+        </td>
+    </tr>
+
+</table>
+</page>
+</body>

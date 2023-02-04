@@ -5,3 +5,4 @@ phonenumbers == 8.13.4
 django-crispy-forms == 1.14.0
 djangorestframework == 3.14.0
 pandas == 1.5.3
+xhtml2pdf == 0.2.9
