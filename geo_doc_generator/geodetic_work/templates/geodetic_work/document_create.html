@@ -1,0 +1,34 @@
+{% extends 'geodetic_work/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+
+
+<div class="content-section">
+    <form method="POST" enctype = "multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Wprowadź dane dokumentu:</legend>
+            <small class="text-muted">
+                {{ geodetic_work }}
+            </small>
+            {{ form|crispy }}
+        </fieldset>
+        <div>
+            <button class="btn btn-outline-info" type="submit">Zapisz</button>
+        </div>
+    </form>
+</div>
+
+
+{% else %}
+<div class="content-section">
+    <h2>Nie jesteś zalogowany</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a  href="{% url 'login' %}">Zaloguj się</a>
+        </small>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

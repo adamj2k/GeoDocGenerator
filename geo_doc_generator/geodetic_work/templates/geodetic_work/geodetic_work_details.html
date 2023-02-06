@@ -9,7 +9,7 @@
     <h4>Obiekt: {{work.work_object}}</h4>
     <table>
         <tr><th>ID pracy</th><th>status</th><th>woj.</th><th>powiat</th>
-        <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th>
+        <th>jednostka ew.</th><th>obręb</th><th>obiekt</th><th>działki</th><th>cel</th>
         <th>data aktual.</th><th>data operatu</th><th>data mat.</th><th>obszar[ha]</th>
         <th>zmiany BDOT500</th><th>zmiany GESUT</th><th>zmiany EGiB</th>
         </tr>
@@ -19,12 +19,13 @@
                 <td>{{work.voivodeship}}</td>
                 <td>{{work.county}}</td>
                 <td>{{work.commune}}</td>
-                <td>{{work.precint}}</td>
+                <td>{{work.precincts}}</td>
                 <td>{{work.work_object}}</td>
                 <td>{{work.plots}}</td>
+                <td>{{ work.work_scope }}</td>
                 <td>{{work.survey_date}}</td>
                 <td>{{work.documentation_date}}</td>
-                <td>{{work.begin_dte}}</td>
+                <td>{{work.begin_date}}</td>
                 <td>{{work.change_bdot_database}}</td>
                 <td>{{work.change_gesut_database}}</td>
                 <td>{{work.change_egib_database}}</td>
@@ -39,134 +40,166 @@
         <BR>
         <h4>Dokumenty do operatu:</h4>
         <table>
-                <tr><th>l. p.</th><th>zawartość</th><th>status</th><th></th><th></th>
+                <tr><th>l. p.</th><th>zawartość</th><th>status</th><th></th>
                 </tr>
                 <tr>
                     <td>1.</td>
                     <td>Spis Treści</td>
-                    <td></td>
                     <td><a href="#">Podgląd</a></td>
                     <td><a href="#">Generuj</a></td>
                 </tr>
                 <tr>
                     <td>2.</td>
                     <td>Sprawozdanie techniczne</td>
-                    <td>{% if work.technicaldescription.id %}
-                        Utworzono
+                    {% if work.technicaldescription.id %}
+                    <td>
+                     <a href="{% url 'technical-description-edit' work.technicaldescription.id %}">Podgląd</a>
+                    </td>
+                    <td><a href="{% url 'technical-description-edit' work.technicaldescription.id %}">Edytuj</a>
+                        <a href="{% url 'geodetic-generate-doc' work.id %}">Generuj PDF</a>
+                    </td>
                         {% else %}
-                        Nie utworzono
+                        <td>Nie utworzono</td>
+                        <td><a href="{% url 'technical-description-create' work.id %}">Dodaj</a></td>
                         {% endif %}
                     </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
+
                 </tr>
                 <tr>
                     <td>3.</td>
                     <td>Mapa porównania z terenem</td>
-                    <td>{% if work.comparisionmap.id %}
-                        Utworzono
-                        {% else %}
-                        Nie utworzono
-                        {% endif %}
+                    {% if work.comaparisionmap.id %}
+                    <td>
+                        <a href="{% url 'comparision-map-edit' work.comaparisionmap.id %}">Podgląd</a>
                     </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
+                    <td>
+                        <a href="{% url 'comparision-map-edit' work.comaparisionmap.id %}">Edytuj</a>
+                    </td>
+                    {% else %}
+                    <td>Nie utworzono</td>
+                    <td>
+                        <a href="{% url 'comparision-map-create' work.id %}">Dodaj</a>
+                    </td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td>4.</td>
                     <td>Dane obserwacyjne osnowy pomiarowej</td>
-                    <td>{% if work.geodeticnetworksurveydata.id %}
-                        Utworzono
-                        {% else %}
-                        Nie utworzono
-                        {% endif %}
+                    {% if work.geodeticnetworksurveydata.id %}
+                    <td>
+                        <a href="{% url 'network-survey-edit' work.geodeticnetworksurveydata.id %}">Podgląd</a>
                     </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
+                    <td>
+                        <a href="{% url 'network-survey-edit' work.geodeticnetworksurveydata.id %}">Edytuj</a>
+                    </td>
+                    {% else %}
+                    <td>Nie utworzono</td>
+                    <td>
+                        <a href="{% url 'network-survey-create' work.id %}">Dodaj</a>
+                    </td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td>5.</td>
                     <td>Szkic osnowy pomiarowej</td>
-                    <td>{% if work.geodeticnetworkdraft.id %}
-                        Utworzono
+                         {% if work.geodeticnetworkdraft.id %}
+                        <td>
+                            <a href="{% url 'network-draft-edit' work.geodeticnetworkdraft.id %}">Podgląd</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'network-draft-edit' work.geodeticnetworkdraft.id %}">Edytuj</a>
+                        </td>
                         {% else %}
-                        Nie utworzono
+                        <td>Nie utworzono</td>
+                        <td>
+                            <a href="{% url 'network-draft-create' work.id %}">Dodaj</a>
+                        </td>
                         {% endif %}
-                    </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
                 </tr>
                 <tr>
                     <td>6.</td>
                     <td>Wykaz współrzędnych osnowy pomiarowej</td>
-                    <td>{% if work.geodeticnetworkcoordinates.id %}
-                        Utworzono
+                        {% if work.geodeticnetworkcoordinates.id %}
+                        <td>
+                            <a href="{% url 'network-coordinates-edit' work.geodeticnetworkcoordinates.id %}">Podgląd</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'network-coordinates-edit' work.geodeticnetworkcoordinates.id %}">Edytuj</a>
+                        </td>
                         {% else %}
-                        Nie utworzono
+                        <td>Nie utworzono</td>
+                        <td>
+                            <a href="{% url 'network-coordinates-create' work.id %}">Dodaj</a>
+                        </td>
                         {% endif %}
-                    </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
                 </tr>
                 <tr>
                     <td>7.</td>
                     <td>Szkice polowe</td>
-                    <td>{% if work.fielddraft.id %}
-                        Utworzono
+                        {% if work.fielddraft.id %}
+                        <td>
+                            <a href="{% url 'field-draft-edit' work.fielddraft.id %}">Podgląd</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'field-draft-edit' work.fielddraft.id %}">Edytuj</a>
+                        </td>
                         {% else %}
-                        Nie utworzono
+                        <td>Nie utworzono</td>
+                        <td>
+                            <a href="{% url 'field-draft-create' work.id %}">Dodaj</a>
+                        </td>
                         {% endif %}
-                    </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
                 </tr>
                 <tr>
                     <td>8.</td>
                     <td>Wykaz współrzędnych punktów pomierzonych</td>
-                    <td>{% if work.listofcoordinates.id %}
-                        Utworzono
+                        {% if work.listofcoordinates.id %}
+                        <td>
+                            <a href="{% url 'list-coordinates-edit' work.listofcoordinates.id %}">Podgląd</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'list-coordinates-edit' work.listofcoordinates.id %}">Edytuj</a>
+                        </td>
                         {% else %}
-                        Nie utworzono
+                        <td>Nie utworzono</td>
+                        <td>
+                            <a href="{% url 'list-coordinates-create' work.id %}">Dodaj</a>
+                        </td>
                         {% endif %}
-                    </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
                 </tr>
                 <tr>
                     <td>9.</td>
                     <td>Wykaz zmian danych ewidenycyjnych dot. budynków</td>
-                    <td>{% if work.listofcoordinates.id %}
-                        Utworzono
+                        {% if work.changelistbuilding.id %}
+                        <td>
+                            <a href="{% url 'change-buildings-edit' work.changelistbuildings.id %}">Podgląd</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'change-buildings-edit' work.changelistbuildings.id %}">Edytuj</a>
+                        </td>
                         {% else %}
-                        Nie utworzono
+                        <td>Nie utworzono</td>
+                        <td>
+                            <a href="{% url 'change-buildings-create' work.id %}">Dodaj</a>
+                        </td>
                         {% endif %}
-                    </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
                 </tr>
                 <tr>
                     <td>10.</td>
                     <td>Wykaz zmian danych ewidenycyjnych dot. działek</td>
-                    <td>{% if work.listofcoordinates.id %}
-                        Utworzono
+                        {% if work.changelistplot.id %}
+                        <td>
+                            <a href="{% url 'change-plots-edit' work.changelistplot.id %}">Podgląd</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'change-plots-edit' work.changelistplot.id %}">Edytuj</a>
+                        </td>
                         {% else %}
-                        Nie utworzono
+                        <td>Nie utworzono</td>
+                        <td>
+                            <a href="{% url 'change-plots-create' work.id %}">Dodaj</a>
+                        </td>
                         {% endif %}
-                    </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
-                </tr>
-                <tr>
-                    <td>11.</td>
-                    <td>Inne</td>
-                    <td>{% if work.listofcoordinates.id %}
-                        Utworzono
-                        {% else %}
-                        Nie utworzono
-                        {% endif %}
-                    </td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Dodaj</a></td>
                 </tr>
         </table>
 

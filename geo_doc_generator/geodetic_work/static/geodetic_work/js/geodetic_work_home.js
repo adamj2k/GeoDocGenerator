@@ -12,11 +12,11 @@ async function deleteWork(buttonID){
     { method: 'DELETE',
       headers: {'Content-Type': 'application/json', 'X-CSRFToken': getCookie("csrftoken")},
     });
-    let status_code = await resp.status_code;
+    let status_code = await resp.status;
 
     console.log(status_code);
     if(status_code == 204) {
-        reload();
+        location.reload();
     }
 }
 
@@ -28,7 +28,7 @@ async function editWork(buttonID){
     {'method': 'PUT',
       headers: {'Content-Type': 'application/json', 'X-CSRFToken': getCookie("csrftoken")},
     });
-    let status_code = await resp.status_code;
+    let status_code = await resp.status;
 
     console.log(status_code);
     if(status_code == 204) {
