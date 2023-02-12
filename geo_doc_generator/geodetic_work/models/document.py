@@ -97,3 +97,8 @@ class ChangeListBuilding(Document):
 class ChangeListPlot(Document):
     def __str__(self) -> str:
         return f"Wykaz zmian danych ewidencyjnych dot. działki - {self.id_work}"
+
+
+class TableOfContent(Document):
+    def __str__(self) -> str:
+        return f"Spis Treści - {self.id_work}"

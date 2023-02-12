@@ -47,6 +47,9 @@ class GeodeticWork(models.Model):
     status = models.CharField(
         max_length=3, null=True, choices=Status.choices, default=Status.INPROGRESS
     )
+    pdf_documentation = models.FileField(
+        upload_to="static/geodetic_work/", null=True, blank=True
+    )
 
     def __str__(self) -> str:
         return f"{self.id_work} - {self.work_object}"

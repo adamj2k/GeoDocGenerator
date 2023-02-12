@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family:'Calibri';
+            font-size: 10pt;
+          }
+
+
+        @page {
+            size: a4 portrait;
+            @frame header_frame {           /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 2cm; width: 19cm; top: 0.5cm; height: 4.5cm;
+            }
+            @frame content_frame {          /* Content Frame */
+                left: 1cm; width: 19cm; top: 4.5cm; height: 20cm; font-size: 10pt;
+            }
+            @frame footer_frame {           /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 1cm; width: 19cm; top: 26cm; height: 3cm;
+            }
+        }
+        .page-header{
+            font-size: 8pt;
+          }
+    </style>
+    <title>Sprawozdanie techniczne - {{id.work}}</title>
+</head>
+
+<body>
+    <div id="header_content">
+    <table >
+    <tr >
+    <td style="width:9.5cm">
+        <div class="page-header">{{ id_work }}</div>
+        <div class="page-header">woje.:{{ voivodeship}}</div>
+        <div class="page-header">powiat: {{ county}}</div>
+        <div class="page-header">jdn.ew.:{{ commune}}</div>
+        <div class="page-header">obr.:{{ precinct }}</div>
+        <div class="page-header">obiekt: {{ work_object}}<div>
+        <div class="page-header">cel: {{ work_scope }}</div>
+    </td  >
+    <td style="width:9.5cm">
+        <div >LOGO</div>
+        <div >{{ work.contractor.company_name }}</div>
+        <div class="page-header">{{ work.contractor.adress1 }}, {{ work.contractor.adress2 }}</div>
+        <div class="page-header">{{ work.contractor.nip_number}}, {{work.contractor.regon_number }}</div>
+    </td>
+    </tr>
+    </table>
+    </div>
+    <div id="footer_content">
+        <div class="page-header">Dokument podpisany elektronicznie przez: {{ work.contractor.licenced_surveyors }} </div>
+        <div class="page-header"> <pdf:pagenumber> </div>
+    </div>
+    <div>
+        <h2 style="text-align: center;">Dane obserwacyjne osnowy pomiarowej</h2>
+        <div>{{ geodetic_network.raport|linebreaks }}</div>
+
+    </div>
+
+
+</body>
+</html>
