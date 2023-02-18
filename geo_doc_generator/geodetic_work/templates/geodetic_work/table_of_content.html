@@ -10,6 +10,11 @@
             font-size: 10pt;
           }
 
+          .alert {
+            color: #bf1111;
+            font-size: 20pt;
+          }
+
 
         @page {
             size: a4 portrait;
@@ -33,6 +38,13 @@
 </head>
 
 <body>
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert" >
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
     <div id="header_content">
     <table>
     <tr>

@@ -1,15 +1,25 @@
 from django.urls import path
-from geodetic_technical_documentation.views import (
+from geodetic_technical_documentation.views.technical_desc.views import (
     TechnicalDescriptionGeneratePdf,
     TechnicalDescriptionPdfPreview,
+)
+from geodetic_technical_documentation.views.network_coordinates.views import (
     GeodeticNetworkCoordinatesGeneratePDF,
     GeodeticNetworkCoordinatesPdfPreview,
+)
+from geodetic_technical_documentation.views.network_survey.views import (
     GeodeticNetworkSurveysGeneratePDF,
     GeodeticNetworkSurveyPdfPreview,
+)
+from geodetic_technical_documentation.views.list_coordinates.views import (
     ListOfCoordinatesGeneratePDF,
     ListOfCoordinatesGeneratePdfPreview,
+)
+from geodetic_technical_documentation.views.table_of_content.views import (
     TableOfContentGenerate,
     TableOfContentPreView,
+)
+from geodetic_technical_documentation.views.generate_merge_pdf.views import (
     GeodeticWorkDocumentsPDFGenerate,
 )
 
