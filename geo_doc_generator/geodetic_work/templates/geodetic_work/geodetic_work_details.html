@@ -39,25 +39,26 @@
         </table>
         <BR>
         <h4>Dokumenty do operatu:</h4>
+        <h5><a href="{% url 'geo-doc-pdf-generator' work.id %}">GENERUJ ZBIORCZY PLIK PDF</a></h5>
         <table>
-                <tr><th>l. p.</th><th>zawartość</th><th>status</th><th></th>
+                <tr><th>l. p.</th><th>zawartość</th><th>status</th><th>Edycja</th><th>PDF</th>
                 </tr>
                 <tr>
                     <td>1.</td>
                     <td>Spis Treści</td>
-                    <td><a href="#">Podgląd</a></td>
-                    <td><a href="#">Generuj</a></td>
+                    <td><a href="{% url 'table-of-content-preview' work.id %}">Podgląd</a></td>
+                    <td><a href="{% url 'table-of-content-generate' work.id %}">Generuj</a></td>
                 </tr>
                 <tr>
                     <td>2.</td>
                     <td>Sprawozdanie techniczne</td>
                     {% if work.technicaldescription.id %}
                     <td>
-                     <a href="{% url 'technical-description-edit' work.technicaldescription.id %}">Podgląd</a>
+                     <a href="{% url 'technical-discription-preview' work.id %}">Podgląd</a>
                     </td>
                     <td><a href="{% url 'technical-description-edit' work.technicaldescription.id %}">Edytuj</a>
-                        <a href="{% url 'geodetic-generate-doc' work.id %}">Generuj PDF</a>
                     </td>
+                    <td> <a href="{% url 'technical-discription-generate' work.id %}">Generuj PDF</a></td>
                         {% else %}
                         <td>Nie utworzono</td>
                         <td><a href="{% url 'technical-description-create' work.id %}">Dodaj</a></td>
@@ -75,6 +76,7 @@
                     <td>
                         <a href="{% url 'comparision-map-edit' work.comaparisionmap.id %}">Edytuj</a>
                     </td>
+
                     {% else %}
                     <td>Nie utworzono</td>
                     <td>
@@ -87,11 +89,12 @@
                     <td>Dane obserwacyjne osnowy pomiarowej</td>
                     {% if work.geodeticnetworksurveydata.id %}
                     <td>
-                        <a href="{% url 'network-survey-edit' work.geodeticnetworksurveydata.id %}">Podgląd</a>
+                        <a href="{% url 'network-survey-preview' work.id %}">Podgląd</a>
                     </td>
                     <td>
                         <a href="{% url 'network-survey-edit' work.geodeticnetworksurveydata.id %}">Edytuj</a>
                     </td>
+                    <td> <a href="{% url 'network-survey-generate' work.id %}">Generuj PDF</a></td>
                     {% else %}
                     <td>Nie utworzono</td>
                     <td>
@@ -121,11 +124,12 @@
                     <td>Wykaz współrzędnych osnowy pomiarowej</td>
                         {% if work.geodeticnetworkcoordinates.id %}
                         <td>
-                            <a href="{% url 'network-coordinates-edit' work.geodeticnetworkcoordinates.id %}">Podgląd</a>
+                            <a href="{% url 'network-coordinates-preview' work.id %}">Podgląd</a>
                         </td>
                         <td>
                             <a href="{% url 'network-coordinates-edit' work.geodeticnetworkcoordinates.id %}">Edytuj</a>
                         </td>
+                        <td> <a href="{% url 'network-coordinates-generate' work.id %}">Generuj PDF</a></td>
                         {% else %}
                         <td>Nie utworzono</td>
                         <td>
@@ -155,11 +159,12 @@
                     <td>Wykaz współrzędnych punktów pomierzonych</td>
                         {% if work.listofcoordinates.id %}
                         <td>
-                            <a href="{% url 'list-coordinates-edit' work.listofcoordinates.id %}">Podgląd</a>
+                            <a href="{% url 'list-coordinates-preview' work.id %}">Podgląd</a>
                         </td>
                         <td>
                             <a href="{% url 'list-coordinates-edit' work.listofcoordinates.id %}">Edytuj</a>
                         </td>
+                        <td> <a href="{% url 'list-coordinates-generate' work.id %}">Generuj PDF</a></td>
                         {% else %}
                         <td>Nie utworzono</td>
                         <td>
@@ -172,10 +177,10 @@
                     <td>Wykaz zmian danych ewidenycyjnych dot. budynków</td>
                         {% if work.changelistbuilding.id %}
                         <td>
-                            <a href="{% url 'change-buildings-edit' work.changelistbuildings.id %}">Podgląd</a>
+                            <a href="{% url 'change-buildings-edit' work.changelistbuilding.id %}">Podgląd</a>
                         </td>
                         <td>
-                            <a href="{% url 'change-buildings-edit' work.changelistbuildings.id %}">Edytuj</a>
+                            <a href="{% url 'change-buildings-edit' work.changelistbuilding.id %}">Edytuj</a>
                         </td>
                         {% else %}
                         <td>Nie utworzono</td>

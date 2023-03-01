@@ -12,6 +12,9 @@ body {
     width: 21cm;
     height: 29.7cm;
   }
+  .page-header{
+    font-size: 0.5em;
+  }
 
   @media print {
     body, page {

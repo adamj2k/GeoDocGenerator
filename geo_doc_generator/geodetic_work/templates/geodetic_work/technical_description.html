@@ -29,10 +29,7 @@
             font-size: 8pt;
           }
     </style>
-
-    <title>Geodetic Documentation Generator</title>
-
-
+    <title>Sprawozdanie techniczne - {{id.work}}</title>
 </head>
 
 <body>
@@ -86,29 +83,25 @@
             <h4><li>Opis przebiegu i rezultatów wykonywanych prac geodezyjnych</li></h4>
             <ol type="1">
                 <li>Zakres wykorzystania materiałów PZGiK.
-                    <div>{{technical_description.source_data}}</div>
+                    <div>{{technical_description.source_data|linebreaks }}</div>
                 </li>
                 <li>Zastosowane technologie i metody pomiarowe:
-                    <div>{{technical_description.comparision_description}}</div>
-                    <div>{{technical_description.geodetic_network_description}}</div>
-                    <div>{{technical_description.control_survey_description}}</div>
-                    <div>{{technical_description.land_survey_descrption}}</div>
-                    <div>{{technical_description.results_descrption}}</div>
-                    <div>{{technical_description.zudp_building_permit}}</div>
-                    <div>{{technical_description.boundary_plots}}</div>
-                    <div>{{technical_description.output_documents}}</div>
+                    <div>{{technical_description.comparision_description|linebreaks }}</div>
+                    <div>{{technical_description.geodetic_network_description|linebreaks }}</div>
+                    <div>{{technical_description.control_survey_description|linebreaks }}</div>
+                    <div>{{technical_description.land_survey_descrption|linebreaks }}</div>
+                    <div>{{technical_description.results_descrption|linebreaks }}</div>
+                    <div>{{technical_description.zudp_building_permit|linebreaks }}</div>
+                    <div>{{technical_description.boundary_plots|linebreaks }}</div>
+                    <div>{{technical_description.output_documents|linebreaks }}</div>
                 </li>
                 <li>Informacja dotycząca przekazywanej bazy roboczej
-                    <div>{{technical_description.update_county_database}}</div>
+                    <div>{{technical_description.update_county_database|linebreaks }}</div>
                 </li>
                 <li>Materiały do EGiB - zakres zmian.
-                    <div>{{technical_description.update_egib_database}}</div>
+                    <div>{{technical_description.update_egib_database|linebreaks }}</div>
                 </li>
             </ol>
-
-                <div>{{ geodetic_network_survey.raport }}</div>
-                <div>{{ geodetic_network_coordinates.list_of_coordinates }}</div>
-                <div>{{ list_coordinates.list_of_coordinates }}</div>
     </div>
 
 
