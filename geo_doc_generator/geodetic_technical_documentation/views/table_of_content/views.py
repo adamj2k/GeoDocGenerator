@@ -175,9 +175,7 @@ class TableOfContentPreView(DetailView):
                         self.request,
                         f"Błąd: wygeneruj plik PDF dla {table_of_content[element]} ",
                     )
-                    return HttpResponseRedirect(
-                        reverse("geodetic-work-details", kwargs={"pk": instance.id})
-                    )
+                    return redirect("geodetic-work-details", pk=instance.id)
                 start_page = end_page + 1
                 number_of_pages_in_pdf = len(reader_pdf_file.pages)
                 end_page = start_page + number_of_pages_in_pdf - 1
