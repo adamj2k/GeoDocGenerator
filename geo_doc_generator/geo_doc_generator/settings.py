@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-c$2s8^42-paq9u(^)k!s47n&aukq7*+gf^#-y!-#2q_7xi(vg(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["geodocgenerator-dev.eu-central-1.elasticbeanstalk.com"]
 
 
 # Application definition
@@ -87,8 +87,12 @@ WSGI_APPLICATION = "geo_doc_generator.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ["DATABASE_NAME"],
+        "USER": os.environ["DATABASE_USER"],
+        "PASSWORD": os.environ["DATABASE_PASSWORD"],
+        "HOST": os.environ["DATABASE_HOST"],
+        "PORT": os.environ["DATABASE_PORT"],
     }
 }
 

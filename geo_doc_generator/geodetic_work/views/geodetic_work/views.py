@@ -74,7 +74,7 @@ class GeodeticWorkEditView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     def form_valid(self, form):
         work_id = form.data.get("id_work")
         form.save()
-        messages.success(self.request, f"Zaaktualizowałeś dane pracy o id: {work_id} ")
+        messages.success(self.request, f"Zaktualizowałeś dane pracy o id: {work_id} ")
         return redirect(self.success_url)
 
     def test_func(self):
