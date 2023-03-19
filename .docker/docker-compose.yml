@@ -1,10 +1,14 @@
 version: '3.9'
 services:
   web:
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - DEV=${DEV}
     build:
       context: ..
       dockerfile: ./.docker/dockerfile
     volumes:
-      - C:/Devs/GeoDocGenerator/geo_doc_generator:/app/geo_doc_generator/
+      - ../geo_doc_generator:/app/geo_doc_generator/
     ports:
       - "8000:8000"

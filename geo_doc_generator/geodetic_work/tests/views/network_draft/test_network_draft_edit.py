@@ -52,6 +52,9 @@ class TestGeodeticNetworkDraftEditView(TestCase):
     def tearDownClass(cls) -> None:
         return super().tearDownClass()
 
+    def tearDown(self) -> None:
+        return super().tearDown()
+
     def test_should_return_status_code_200_when_request_is_sent(self):
         expected_code = 200
 

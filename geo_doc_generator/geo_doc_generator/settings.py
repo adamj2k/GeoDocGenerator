@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
-os.environ["DEV"] = "False"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-c$2s8^42-paq9u(^)k!s47n&aukq7*+gf^#-y!-#2q_7xi(vg("
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ["DEBUG"])
 
-ALLOWED_HOSTS = ["geodocgenerator-dev.eu-central-1.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["geodocgenerator-dev.eu-central-1.elasticbeanstalk.com", "127.0.0.1"]
 
 
 # Application definition
@@ -82,7 +81,7 @@ WSGI_APPLICATION = "geo_doc_generator.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if os.environ["DEV"] == "True":
+if bool(os.environ.get("DEV")) == True:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
