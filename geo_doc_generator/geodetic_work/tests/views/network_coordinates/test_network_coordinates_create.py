@@ -75,7 +75,22 @@ class TestGeodeticCoordinatesCreateView(TestCase):
         )
 
     def test_should_show_message_after_success(self):
-        pass
+        response = client.post(
+            reverse(
+                "network-coordinates-create", kwargs={"pk": self.test_geodetic_work1.pk}
+            ),
+            data=self.data,
+            follow=True,
+        )
+
+        self.assertContains(response, "Dodałeś dokument:", status_code=200)
 
     def test_should_non_contex_when_no_user_is_log_in(self):
-        pass
+        self.client.logout()
+        response = client.get(
+            reverse(
+                "network-coordinates-create", kwargs={"pk": self.test_geodetic_work1.pk}
+            )
+        )
+
+        self.assertContains(response, "Nie jesteś zalogowany", status_code=200)
