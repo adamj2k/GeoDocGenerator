@@ -13,16 +13,17 @@ App to generate technical documentation for land-surveys works. App is prepared 
 Add your data and generate one PDF file with whole documentation. This application was made to speed up my own work.
 
 ## Technologies
-	- AWS (EB, EC2, RDS, S3)
-	- Python 3.9
-	- Django 4.1.5
-	- Docker and Docker Compose
-	- PostgreSQL
-	Modules:
-	- xhtml2pdf
-	- PyPDF2
-	- pytest
-	- DRF
+- AWS (EB, EC2, RDS, S3)
+- Python 3.9
+- Django 4.1.5
+- Docker and Docker Compose
+- PostgreSQL  
+  
+**Modules:**  
+- xhtml2pdf
+- PyPDF2
+- pytest
+- DRF
 
 ## Setup
 Go to .docker directory. Put .env file into it.
