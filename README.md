@@ -54,4 +54,4 @@ Now we working on add some tools to: height conversion, convert txt files with c
 Remember to change WSGI server to Gunicorn server.
 
 ## Screenshot
-![Screenshot of a detail of geodeti work](geo_doc_generator\media\screen2.jpeg)
+![Screenshot of a detail of geodeti work](geo_doc_generator/media/screen2.jpeg)
