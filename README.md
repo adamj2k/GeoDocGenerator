@@ -37,7 +37,7 @@ SECRET_KEY=<your secret key>
 DEBUG=True
 DEV=True
 ```
-If You want to use postgreSQL please set:
+If you want to use PostgreSQL please set:
 ```
 "NAME"="YOUR_DATABASE_NAME"
 "USER": "YOUR_DATABASE_USER"
