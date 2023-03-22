@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ["DEBUG"])
+DEBUG = bool(os.environ.get("DEBUG", "True"))
 
 ALLOWED_HOSTS = ["geodocgenerator-dev.eu-central-1.elasticbeanstalk.com", "127.0.0.1"]
 
@@ -81,7 +81,7 @@ WSGI_APPLICATION = "geo_doc_generator.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if bool(os.environ.get("DEV")) == True:
+if bool(os.environ.get("DEV", "True")) == True:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
