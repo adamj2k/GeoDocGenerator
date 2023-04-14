@@ -29,4 +29,5 @@ jobs:
       env: 
          SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
-        python geo_doc_generator/manage.py test
+        cd geo_doc_generator
+        python manage.py test
