@@ -1,0 +1,21 @@
+{% extends 'geodetic_work/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+
+    <form method="POST" enctype = "multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Generuj plik wsadowy</legend>
+            Wsad oprócz Nr, X, Y, H zawiera RZG (rzędna góry), rodzaj pomiaru (pomiar na osnowę)
+            {{ form|crispy }}
+        </fieldset>
+        <div>
+            <button class="btn btn-outline-info" type="submit">Generuj</button>
+        </div>
+    </form>
+    Wybierz pliki txt ze współrzędnymi rozdzielany znakiem tabulacji lub spacji (Nr X Y H), bez nagłówka
+Skrypt usuwa spacje znajdujące się przed numeracją pikiet.
+W przypadku wystąpienia błędu sprawdź plik źródłowy
+</div>
+{% endblock %}

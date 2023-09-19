@@ -1,0 +1,24 @@
+{% extends 'geodetic_work/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+
+
+<div class="content-section">
+    <a href="{% url 'height-conversion' %}">Konwersja wysokości w pliku txt [Nr X Y H]</a>
+</div>
+<div class="content-section">
+    <a href="{% url 'batch-file-geo-info' %}">Plik wsadowy do programu GEO-INFO Delta</a>
+</div>
+
+{% else %}
+<div class="content-section">
+    <h2>Nie jesteś zalogowany</h2>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a  href="{% url 'login' %}">Zaloguj się</a>
+        </small>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
