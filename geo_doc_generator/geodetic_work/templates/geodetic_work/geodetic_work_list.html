@@ -21,14 +21,14 @@
 
             <tr>
                 <td><a href="{% url 'geodetic-work-details' work.id %}">{{ work.id_work }}</a></td>
-                <td>{{work.status}}</td>
+                <td>{{ work.get_status_display }}</td>
                 <td>{{work.voivodeship}}</td>
                 <td>{{work.county}}</td>
                 <td>{{work.commune}}</td>
                 <td>{{work.precinct}}</td>
                 <td>{{work.work_object}}</td>
                 <td>{{work.plots}}</td>
-                <td>{{ work.work_scope }}</td>
+                <td>{{ work.get_work_scope_display }}</td>
                 <td>{{work.survey_date}}</td>
                 <td>{{work.documentation_date}}</td>
                 <td>{{work.begin_date}}</td>
