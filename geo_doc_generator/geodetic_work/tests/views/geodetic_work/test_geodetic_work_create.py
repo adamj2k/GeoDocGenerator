@@ -18,7 +18,7 @@ class TestGeodeticWorkCreateView(TestCase):
             "precinct": "1094",
             "work_object": "Police, ul. Biała 12",
             "plots": "1, 2",
-            "work_scope": "sporządzenie mapy do celów projektowych",
+            "work_scope": "MDCP",
             "survey_date": "2023-02-12",
             "begin_date": "2023-02-01",
             "area": "1 ha",

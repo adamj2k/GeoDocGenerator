@@ -88,6 +88,7 @@ local_settings.py
 .env
 db.sqlite3
 geo_doc_generator/media/static/geodetic_work/
+geo_doc_generator/media/documents/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
