@@ -2,6 +2,7 @@ from django.urls import path
 from geodetic_technical_documentation.views.technical_desc.views import (
     TechnicalDescriptionGeneratePdf,
     TechnicalDescriptionPdfPreview,
+    TechnicalDescriptionGenerateDocx,
 )
 from geodetic_technical_documentation.views.network_coordinates.views import (
     GeodeticNetworkCoordinatesGeneratePDF,
@@ -78,5 +79,10 @@ urlpatterns = [
         "geodocgenerate/<int:pk>",
         GeodeticWorkDocumentsPDFGenerate.as_view(),
         name="geo-doc-pdf-generator",
+    ),
+    path(
+        "docxtechdesc/<int:pk>",
+        TechnicalDescriptionGenerateDocx.as_view(),
+        name="docx-technical-description-generate",
     ),
 ]

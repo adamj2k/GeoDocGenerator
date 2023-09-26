@@ -58,7 +58,9 @@
                     </td>
                     <td><a href="{% url 'technical-description-edit' work.technicaldescription.id %}">Edytuj</a>
                     </td>
-                    <td> <a href="{% url 'technical-discription-generate' work.id %}">Generuj PDF</a></td>
+                    <td> <a href="{% url 'technical-discription-generate' work.id %}">Generuj PDF</a>
+                        <a href="{% url 'docx-technical-description-generate' work.id %}">Generuj DOCX</a>
+                    </td>
                         {% else %}
                         <td>Nie utworzono</td>
                         <td><a href="{% url 'technical-description-create' work.id %}">Dodaj</a></td>
