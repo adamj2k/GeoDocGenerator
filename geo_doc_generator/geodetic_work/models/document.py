@@ -3,6 +3,13 @@ from django.db.models.deletion import CASCADE
 from django.utils.translation import gettext_lazy as _
 from .geodetic_work import GeodeticWork
 
+DOCUMENTS_PATH = "documents/"
+
+
+def get_upload_path(instance, filename):
+    """Generates the file path for the TDocuments."""
+    return f"{DOCUMENTS_PATH}/{instance.id_work.id}/{filename}"
+
 
 class Document(models.Model):
     id_work = models.OneToOneField(GeodeticWork, on_delete=CASCADE)
@@ -12,6 +19,7 @@ class Document(models.Model):
     docx_file = models.FileField(
         upload_to="static/geodetic_work/", null=True, blank=True
     )
+    pdf_file = models.FileField(upload_to=get_upload_path, null=True, blank=True)
 
     class Meta:
         abstract = True
