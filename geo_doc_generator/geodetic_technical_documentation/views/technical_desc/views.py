@@ -69,19 +69,7 @@ class TechnicalDescriptionPdfPreview(DocumentPreview):
 
 class TechnicalDescriptionGenerateDocx(DetailView):
     model = GeodeticWork
-
-    def save_docx_to_file(self, docx_file):
-        technical_description = TechnicalDescription.objects.get(id_work=self.object.id)
-        filename = f"{self.object.id_work}_tech_desc.docx"
-        try:
-            DeleteOldPDF._delete_file(technical_description.docx_file.path)
-        except ValueError:
-            pass
-        with open(filename, "wb+") as file:
-            file.write(docx_file)
-            technical_description.docx_file = File(file, filename)
-            technical_description.save()
-        return docx_file
+    TEMPLATE_PATH = "geodetic_technical_documentation\\template_inwent.docx"
 
     def get_geodetic_work_context(self, instance):
         docx_context = dict()
@@ -91,23 +79,35 @@ class TechnicalDescriptionGenerateDocx(DetailView):
 
     def generate_docx(self, context_dict=None):
         self.object = self.get_object()
+        technical_description = TechnicalDescription.objects.get(id_work=self.object.id)
+        filename = f"{self.object.id_work}_tech_desc.docx"
+        try:
+            DeleteOldPDF._delete_file(technical_description.docx_file.path)
+        except ValueError:
+            pass
         if context_dict is None:
             context_dict = {}
         template_docx = os.path.join(
             settings.BASE_DIR,
             settings.STATIC_ROOT,
-            "geodetic_technical_documentation\\template_inwent.docx",
-        )  # TODO add path in appropriate way
+            self.TEMPLATE_PATH,
+        )
         document_docx = DocxTemplate(template_docx)
         document_docx.render(context_dict)
-        docx_file = document_docx.save("Sprawozdanie.docx")
-        return docx_file
+        file_path = os.path.join(
+            settings.BASE_DIR,
+            settings.MEDIA_ROOT,
+            "sprawozdanie_temp.docx",
+        )
+        document_docx.save(file_path)
+        technical_description.docx_file = File(open(file_path, "rb"), filename)
+        technical_description.save()
+        return technical_description.docx_file
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        docx_contex = self.get_geodetic_work_context(self.object)
-        print(docx_contex)
-        docx_generation = self.generate_docx(docx_contex)
+        docx_context = self.get_geodetic_work_context(self.object)
+        docx_generation = self.generate_docx(docx_context)
         response = HttpResponse(docx_generation, content_type="application/docx")
         filename = f"Sprawozdanie_{self.object.id_work}.docx"
         content = f"inline; filename={filename}"
