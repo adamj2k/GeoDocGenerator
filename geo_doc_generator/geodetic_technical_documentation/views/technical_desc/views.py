@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
@@ -11,6 +12,7 @@ from geodetic_technical_documentation.utilis.utilis import DocumentPreview, Dele
 from xhtml2pdf import pisa
 from PyPDF2 import PdfReader, PdfMerger
 from django.conf import settings
+from docxtpl import DocxTemplate
 
 
 class TechnicalDescriptionGeneratePdf(DetailView):
@@ -63,3 +65,51 @@ class TechnicalDescriptionGeneratePdf(DetailView):
 
 class TechnicalDescriptionPdfPreview(DocumentPreview):
     template_name = "geodetic_work/technical_description.html"
+
+
+class TechnicalDescriptionGenerateDocx(DetailView):
+    model = GeodeticWork
+    TEMPLATE_PATH = "geodetic_technical_documentation\\template_inwent.docx"
+
+    def get_geodetic_work_context(self, instance):
+        docx_context = dict()
+        geodetic_work_serializer = GeodeticWorkDocumentsSerializer(instance)
+        docx_context = geodetic_work_serializer.serialize()
+        return docx_context
+
+    def generate_docx(self, context_dict=None):
+        self.object = self.get_object()
+        technical_description = TechnicalDescription.objects.get(id_work=self.object.id)
+        filename = f"{self.object.id_work}_tech_desc.docx"
+        try:
+            DeleteOldPDF._delete_file(technical_description.docx_file.path)
+        except ValueError:
+            pass
+        if context_dict is None:
+            context_dict = {}
+        template_docx = os.path.join(
+            settings.BASE_DIR,
+            settings.STATIC_ROOT,
+            self.TEMPLATE_PATH,
+        )
+        document_docx = DocxTemplate(template_docx)
+        document_docx.render(context_dict)
+        file_path = os.path.join(
+            settings.BASE_DIR,
+            settings.MEDIA_ROOT,
+            "sprawozdanie_temp.docx",
+        )
+        document_docx.save(file_path)
+        technical_description.docx_file = File(open(file_path, "rb"), filename)
+        technical_description.save()
+        return technical_description.docx_file
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        docx_context = self.get_geodetic_work_context(self.object)
+        docx_generation = self.generate_docx(docx_context)
+        response = HttpResponse(docx_generation, content_type="application/docx")
+        filename = f"Sprawozdanie_{self.object.id_work}.docx"
+        content = f"inline; filename={filename}"
+        response["Content-Disposition"] = content
+        return response
