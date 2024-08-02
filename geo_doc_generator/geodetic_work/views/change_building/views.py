@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from geodetic_work.models.geodetic_work import GeodeticWork
 from geodetic_work.models.document import *
@@ -48,6 +48,15 @@ class ChangeBuildingUpdateView(UpdateView, LoginRequiredMixin, UserPassesTestMix
             "Zmieniłeś dane dokumentu: Wykaz zmian danych ewidencyjnych dot. budynku",
         )
         return redirect("geodetic-work-details", work_id)
+
+    def test_func(self):
+        geodetic_work = self.get_object()
+        return self.request.user == geodetic_work.contractor
+
+
+class ChangeBuildingDeleteView(UserPassesTestMixin, DeleteView):
+    model = ChangeListBuilding
+    template_name = "geodetic_work/document_delete.html"
 
     def test_func(self):
         geodetic_work = self.get_object()

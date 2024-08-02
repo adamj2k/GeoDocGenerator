@@ -1,0 +1,75 @@
+version: '3.9'
+services:
+  app:
+    env_file:
+      - .env
+    build:
+      context: ..
+      dockerfile: ./.mikrus/Dockerfile
+    container_name: "geo-doc-generator-app"
+    command: /scripts/app/run.sh
+    volumes:
+      - static:/app/static
+      - media:/app/media
+    expose:
+      - 8000
+    networks:
+      - network_back
+      - network_front
+  db:
+    image: postgres:13
+    container_name: "geo-doc-db"
+    env_file:
+      - .env
+    healthcheck:
+      test: pg_isready -U postgres -d postgres
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    volumes:
+      - db-data:/var/lib/postgresql/data/:Z
+    expose:
+      - 5432
+    networks:
+      - network_back
+  nginx:
+    build:
+      context: ..
+      dockerfile: ./.mikrus/nginx/Dockerfile
+    container_name: "geo-doc-generator-nginx"
+    environment:
+      - HOST=geo-doc-generator-app
+      - APP_PORT=8000
+      - PORT=80
+    volumes:
+      - static:/home/app/web/staticfiles
+      - media:/home/app/web/mediafiles
+    ports:
+      - "20158:80"
+      - "[::]:80:80"
+    networks:
+      - ip6net
+      - network_back
+    depends_on:
+      - app
+
+
+volumes:
+  static:
+  media:
+  db-data:
+
+networks:
+  network_front:
+    driver: bridge
+    name: geo-doc-generator-front
+  network_back:
+    driver: bridge
+    internal: true
+    name: geo-doc-generator-back
+  ip6net:
+    enable_ipv6: true
+    name: geo-doc-generator-ip6
+    ipam:
+      config:
+        - subnet: "2a01:4f9:3070:100d::/64"

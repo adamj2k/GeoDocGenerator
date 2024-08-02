@@ -37,7 +37,7 @@ class GeodeticWorkListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return self.request.user == geodetic_work.contractor
 
 
-class GeodeticWorkCreatView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
+class GeodeticWorkCreatView(LoginRequiredMixin, CreateView):
     model = GeodeticWork
     template_name = "geodetic_work/geodetic_work_create.html"
     success_url = "geodetic-work-home"
@@ -45,13 +45,10 @@ class GeodeticWorkCreatView(CreateView, LoginRequiredMixin, UserPassesTestMixin)
 
     def form_valid(self, form):
         work_id = form.data.get("id_work")
+        form.instance.contractor = self.request.user
         form.save()
         messages.success(self.request, f"Dodałeś nową pracę o id: {work_id} ")
         return redirect(self.success_url)
-
-    def test_func(self):
-        geodetic_work = self.get_object()
-        return self.request.user == geodetic_work.contractor
 
 
 class GeodeticWorkDetailsView(DetailView, LoginRequiredMixin, UserPassesTestMixin):
@@ -79,4 +76,7 @@ class GeodeticWorkEditView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
 
     def test_func(self):
         geodetic_work = self.get_object()
-        return self.request.user == geodetic_work.contractor
+        return self.request.user == geodetic_work.contractor and super().test_func()
+
+    def handle_no_permission(self):
+        return super().handle_no_permission()
