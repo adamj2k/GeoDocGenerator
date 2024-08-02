@@ -37,6 +37,7 @@ from geodetic_work.views.list_coordinates.views import (
 from geodetic_work.views.change_building.views import (
     ChangeBuildingCreateView,
     ChangeBuildingUpdateView,
+    ChangeBuildingDeleteView,
 )
 from geodetic_work.views.change_plots.views import (
     ChangePlotsCreateView,
@@ -132,6 +133,11 @@ urlpatterns = [
         "changebuildings/<int:pk>",
         ChangeBuildingUpdateView.as_view(),
         name="change-buildings-edit",
+    ),
+    path(
+        "deletebuildings/<int:pk>",
+        ChangeBuildingDeleteView.as_view(),
+        name="change-buildings-delete",
     ),
     path(
         "workdetails/<int:pk>/changeplotscreate/",
