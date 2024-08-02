@@ -7,7 +7,7 @@ services:
       - DEV=${DEV}
     build:
       context: ..
-      dockerfile: ./.docker/dockerfile
+      dockerfile: ./.docker/Dockerfile
     volumes:
       - ../geo_doc_generator:/app/geo_doc_generator/
     ports:
