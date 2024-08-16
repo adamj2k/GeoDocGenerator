@@ -47,6 +47,7 @@ services:
     ports:
       - "20158:80"
       - "[::]:80:80"
+      - "80:80"
     networks:
       - ip6net
       - network_back
